@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T. Siddarth Bharadwaj</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #252526;
+            background: linear-gradient(to bottom, #252526, #757F9A);
+            color: #F3F4F6;
+            overflow: hidden;
+        }
+
+        /* Set Playfair Display for headings */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .scroll-container {
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+
+        .scroll-section {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #home {
+            position: relative;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .home-content {
+            z-index: 1;
+            position: relative;
+        }
+
+        /* Typing Animation */
+        .typing-effect {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: .15em solid white;
+            animation: typing 2.5s steps(40, end) forwards, blink-caret .75s step-end infinite;
+            width: 100%; 
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: white; } }
+
+        /* General Animation styles & NEW ANIMATIONS */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .is-visible .fade-in-up { opacity: 1; transform: translateY(0); }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .is-visible .slide-in-left { opacity: 1; transform: translateX(0); }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .is-visible .slide-in-right { opacity: 1; transform: translateX(0); }
+
+        .card-enter {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .is-visible .card-enter {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .stagger-pop-in > * {
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .is-visible .stagger-pop-in > * { opacity: 1; transform: scale(1); }
+        .is-visible .stagger-pop-in > *:nth-child(1) { transition-delay: 0.1s; }
+        .is-visible .stagger-pop-in > *:nth-child(2) { transition-delay: 0.2s; }
+        .is-visible .stagger-pop-in > *:nth-child(3) { transition-delay: 0.3s; }
+        .is-visible .stagger-pop-in > *:nth-child(4) { transition-delay: 0.4s; }
+        .is-visible .stagger-pop-in > *:nth-child(5) { transition-delay: 0.5s; }
+        .is-visible .stagger-pop-in > *:nth-child(6) { transition-delay: 0.6s; }
+        .is-visible .stagger-pop-in > *:nth-child(7) { transition-delay: 0.7s; }
+
+
+        /* Animation Delays */
+        .is-visible .delay-1 { transition-delay: 0.15s; }
+        .is-visible .delay-2 { transition-delay: 2.6s; }
+        .is-visible .delay-3 { transition-delay: 0.35s; }
+        .is-visible .delay-4 { transition-delay: 0.5s; }
+
+
+        .nav-dots { position: fixed; right: 25px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 18px; z-index: 50; }
+        .nav-dot { width: 12px; height: 12px; background-color: rgba(255, 255, 255, 0.3); border-radius: 50%; transition: all 0.4s ease; }
+        .nav-dot.active { background-color: #ffffff; transform: scale(1.6); box-shadow: 0 0 10px rgba(255, 255, 255, 0.7); }
+        
+        .scroll-indicator { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); animation: bounce 2.5s infinite; color: rgba(255, 255, 255, 0.6); }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); } 40% { transform: translateX(-50%) translateY(-20px); } 60% { transform: translateX(-50%) translateY(-10px); } }
+        
+        .interactive-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .interactive-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .social-icon { transition: transform 0.3s ease, color 0.3s ease; }
+        .social-icon:hover { transform: scale(1.2); color: #ffffff; }
+        
+        .skill-tag {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: float 6s ease-in-out infinite;
+        }
+        .skill-tag:hover { transform: scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation-play-state: paused; }
+        @keyframes float { 0% { transform: translatey(0px); } 50% { transform: translatey(-10px); } 100% { transform: translatey(0px); } }
+        .skill-tag:nth-child(2) { animation-delay: 1s; }
+        .skill-tag:nth-child(3) { animation-delay: 3s; }
+        .skill-tag:nth-child(4) { animation-delay: 2.5s; }
+        .skill-tag:nth-child(5) { animation-delay: 0.5s; }
+        .skill-tag:nth-child(6) { animation-delay: 1.5s; }
+        .skill-tag:nth-child(7) { animation-delay: 2s; }
+    </style>
+</head>
+<body>
+    <nav class="nav-dots">
+        <a href="#home" class="nav-dot active" data-section="home"></a>
+        <a href="#about" class="nav-dot" data-section="about"></a>
+        <a href="#skills" class="nav-dot" data-section="skills"></a>
+        <a href="#projects" class="nav-dot" data-section="projects"></a>
+        <a href="#certificates" class="nav-dot" data-section="certificates"></a>
+        <a href="#contact" class="nav-dot" data-section="contact"></a>
+    </nav>
+
+    <div class="scroll-container">
+
+        <section id="home" class="scroll-section text-center">
+            <div id="particles-js"></div>
+            <div class="max-w-4xl mx-auto home-content">
+                <img src="https://placehold.co/128x128/9CA3AF/FFFFFF?text=SB" alt="Profile Picture" class="fade-in-up w-32 h-32 rounded-full mx-auto border-4 border-gray-400 shadow-lg">
+                <h1 class="text-5xl md:text-7xl font-extrabold mt-6 tracking-tight text-white"><span class="typing-effect">T. Siddarth Bharadwaj</span></h1>
+                <p class="fade-in-up delay-2 text-xl md:text-2xl text-gray-300 mt-2">Computer Science Student @ VIT Bhopal</p>
+            </div>
+            <div class="scroll-indicator">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+        </section>
+
+        <!-- Section 2: About Me -->
+        <section id="about" class="scroll-section">
+            <div class="max-w-4xl text-center">
+                <h2 class="slide-in-left text-sm uppercase font-bold text-gray-400 tracking-widest">About Me</h2>
+                <h2 class="slide-in-right delay-1 text-3xl md:text-4xl font-bold mt-4 leading-tight text-white">A passionate programmer exploring the world of technology.</h2>
+                <p class="fade-in-up delay-3 mt-6 text-lg text-gray-200 max-w-2xl mx-auto">
+                    Hello! I'm Siddarth, a Computer Science student at VIT Bhopal with a strong foundation in programming and a keen interest in software development. My journey is driven by a passion for solving complex problems and building efficient, user-friendly applications.
+                </p>
+            </div>
+             <div class="scroll-indicator">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+        </section>
+
+        <!-- Section 3: Skills -->
+        <section id="skills" class="scroll-section">
+            <div class="max-w-4xl text-center">
+                <h2 class="slide-in-left text-sm uppercase font-bold text-gray-400 tracking-widest">My Toolkit</h2>
+                <h2 class="slide-in-right delay-1 text-3xl md:text-4xl font-bold mt-4 text-white">Technologies & Tools</h2>
+                <div class="mt-8 flex flex-wrap justify-center gap-4 stagger-pop-in">
+                    <span class="skill-tag bg-gray-700 text-gray-200 text-lg font-medium px-6 py-3 rounded-full shadow-md">C</span>
+                    <span class="skill-tag bg-gray-700 text-gray-200 text-lg font-medium px-6 py-3 rounded-full shadow-md">Python</span>
+                    <span class="skill-tag bg-gray-700 text-gray-200 text-lg font-medium px-6 py-3 rounded-full shadow-md">Java</span>
+                    <span class="skill-tag bg-gray-700 text-gray-200 text-lg font-medium px-6 py-3 rounded-full shadow-md">HTML</span>
+                    <span class="skill-tag bg-gray-700 text-gray-200 text-lg font-medium px-6 py-3 rounded-full shadow-md">CSS</span>
+                    <span class="skill-tag bg-gray-700 text-gray-200 text-lg font-medium px-6 py-3 rounded-full shadow-md">Git & GitHub</span>
+                    <span class="skill-tag bg-gray-700 text-gray-200 text-lg font-medium px-6 py-3 rounded-full shadow-md">Linux (Debian)</span>
+                </div>
+            </div>
+             <div class="scroll-indicator">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+        </section>
+
+        <!-- Section 4: Projects -->
+        <section id="projects" class="scroll-section">
+            <div class="max-w-6xl text-center w-full">
+                <h2 class="fade-in-up text-sm uppercase font-bold text-gray-400 tracking-widest">My Work</h2>
+                <h2 class="fade-in-up delay-1 text-3xl md:text-4xl font-bold mt-4 text-white">Featured Project</h2>
+                <div class="mt-10 flex flex-wrap justify-center gap-8">
+                    <div class="interactive-card card-enter delay-3 rounded-xl overflow-hidden shadow-lg max-w-sm">
+                        <img src="https://placehold.co/600x400/252526/FFFFFF?text=FastBite" alt="FastBite Project Screenshot" class="w-full h-48 object-cover">
+                        <div class="p-6 text-left">
+                            <h3 class="text-2xl font-bold text-white">FastBite</h3>
+                            <p class="mt-3 text-gray-300">An intelligent canteen ordering system. Using AI-powered predictive analysis, it provides a real-time, data-driven ETA for your order.</p>
+                            <a href="https://github.com/monkeyDluffy06/FastBite-" target="_blank" rel="noopener noreferrer" class="inline-block mt-5 text-gray-300 hover:text-white font-semibold transition-colors">
+                                View on GitHub &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="scroll-indicator">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+        </section>
+
+        <!-- Section 5: Certificates -->
+        <section id="certificates" class="scroll-section">
+            <div class="max-w-6xl text-center w-full">
+                <h2 class="fade-in-up text-sm uppercase font-bold text-gray-400 tracking-widest">Achievements</h2>
+                <h2 class="fade-in-up delay-1 text-3xl md:text-4xl font-bold mt-4 text-white">My Certifications</h2>
+                <div class="mt-10 flex flex-wrap justify-center gap-8">
+                    <div class="interactive-card card-enter delay-3 rounded-xl overflow-hidden shadow-lg max-w-sm">
+                        <img src="Images/Vityatri.png" alt="Python Essentials Certificate" class="w-full h-auto object-contain bg-white p-2">
+                        <div class="p-6 text-left">
+                            <h3 class="text-xl font-bold text-white">Python Essentials</h3>
+                            <p class="mt-2 text-gray-400">Issued by: Vityarthi (VIT Bhopal)</p>
+                            <p class="mt-1 text-gray-400">Date: 02 April 2025</p>
+                            <a href="https://vityarthi.com/certificate/iDrMC0eEGJLn" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 text-gray-300 hover:text-white font-semibold transition-colors">
+                                View Credential &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="scroll-indicator">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+        </section>
+        
+        <!-- Section 6: Contact -->
+        <section id="contact" class="scroll-section">
+            <div class="max-w-xl text-center">
+                <h2 class="slide-in-left text-sm uppercase font-bold text-gray-400 tracking-widest">Connect With Me</h2>
+                <h2 class="slide-in-right delay-1 text-3xl md:text-4xl font-bold mt-4 text-white">Let's build something great together.</h2>
+                <p class="fade-in-up delay-3 mt-6 text-lg text-gray-200">
+                    I'm always open to new opportunities and collaborations. Feel free to reach out through any of the platforms below!
+                </p>
+                <div class="mt-10 flex justify-center items-center gap-10 stagger-pop-in delay-4">
+                    <a href="https://github.com/monkeyDluffy06" target="_blank" rel="noopener noreferrer" class="social-icon text-gray-400" aria-label="GitHub Profile">
+                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .267.18.577.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/siddarth-bharadwaj-9b7099324" target="_blank" rel="noopener noreferrer" class="social-icon text-gray-400" aria-label="LinkedIn Profile">
+                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="mailto:siddarthbhardwaj612@gmail.com" class="social-icon text-gray-400" aria-label="Email">
+                         <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.scroll-section');
+            const navDots = document.querySelectorAll('.nav-dot');
+            const scrollContainer = document.querySelector('.scroll-container');
+            const particlesCanvas = document.getElementById('particles-js');
+            
+            // --- Intersection Observer for animations ---
+            const observerOptions = {
+                root: scrollContainer,
+                rootMargin: '0px',
+                threshold: 0.6
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        const sectionId = entry.target.id;
+                        navDots.forEach(dot => {
+                            dot.classList.toggle('active', dot.dataset.section === sectionId);
+                        });
+                    } else {
+                        // Optional: remove class to re-trigger animation on scroll up
+                        // entry.target.classList.remove('is-visible');
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => { observer.observe(section); });
+            
+            // --- Particles.js Initialization ---
+            particlesJS('particles-js', { "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#ffffff" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": false }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 2, "direction": "none", "out_mode": "out" } }, "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "repulse": { "distance": 100, "duration": 0.4 }, "push": { "particles_nb": 4 } } }, "retina_detect": true });
+
+            // --- Fade Particles on Scroll ---
+            scrollContainer.addEventListener('scroll', () => {
+                const scrollPosition = scrollContainer.scrollTop;
+                const sectionHeight = scrollContainer.clientHeight;
+                const opacity = 1 - (scrollPosition / (sectionHeight * 0.7));
+                if (particlesCanvas) {
+                    particlesCanvas.style.opacity = Math.max(0, opacity);
+                }
+            });
+
+            // --- Typing Animation Reset on Scroll ---
+            const typingSpan = document.querySelector('.typing-effect');
+            const homeSection = document.getElementById('home');
+            
+            const typingObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        typingSpan.style.animation = 'none';
+                        typingSpan.offsetHeight; 
+                        typingSpan.style.animation = null; 
+                    }
+                });
+            }, { threshold: 0.6 });
+
+            typingObserver.observe(homeSection);
+        });
+    </script>
+</body>
+</html>
+
+
+  
+
